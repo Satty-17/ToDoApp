@@ -1,14 +1,12 @@
 from application import app
-from flask import redirect, render_template, flash, request, url_for
+from flask import abort, redirect, render_template, flash, request, url_for, redirect
 from .forms import TodoForm
 from flask.templating import render_template_string
 from werkzeug.datastructures import RequestCacheControl
 from datetime import datetime
 from application import db
-import pytz
 from bson import ObjectId
 
-# Set the Indian Standard Time timezone
 
 
 @app.route("/")
@@ -16,9 +14,6 @@ def get_todos():
     todos = []
     for todo in db.todo_flask.find().sort("date_created", -1):
         todo["_id"] = str(todo["_id"])
-
-        
-
         todos.append(todo)
     return render_template("view_todos.html", title="Layout page", todos=todos)
 
@@ -66,9 +61,18 @@ def update_todo(id):
 
     else:
         form = TodoForm()
-        todo = db.todo_flask.find_one_or_404({"_id": ObjectId(id)})
+        todo = db.todo_flask.find_one({"_id": ObjectId(id)})
+        if not todo:
+            abort(404)  # Return a 404 error if the todo is not found
+
         form.name.data = todo.get("name", None)
         form.description.data = todo.get("description", None)
         form.completed.data = todo.get("completed", None)
     
     return render_template("add_todo.html", form = form)
+
+@app.route("/delete_todo/<id>")
+def delete_todo(id):
+    db.todo_flask.find_one_and_delete({"_id": ObjectId(id)})
+    flash("Todo deleted", "success")
+    return redirect("/")
