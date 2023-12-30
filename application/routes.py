@@ -24,8 +24,6 @@ def add_todo():
         todo_name = form.name.data
         todo_description = form.description.data
         completed = form.completed.data
-
-        # Get the current time in IST
         
 
         db.todo_flask.insert_one({
