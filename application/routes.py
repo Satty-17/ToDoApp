@@ -30,7 +30,7 @@ def add_todo():
             "name": todo_name,
             "description": todo_description,
             "completed": completed,
-            "date_created": datetime.utcnow()  # Store the date in IST
+            "date_created": datetime.utcnow()
         })
 
         flash("Task Successfully added", "success")
