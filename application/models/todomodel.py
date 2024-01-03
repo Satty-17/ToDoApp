@@ -12,17 +12,15 @@ class TodoModel:
         "properties": {
             "name": {"type": "string"},
             "description": {"type": "string"},
-            "completed": {"type": "string"},
-            "date_created": {"type": "string"},
+            "completed": {"type": "string"}
         },
         "required": ["name", "description", "completed"],
-        "additionalProperties": False,
     }
 
     @staticmethod
     def validate_todo(todo):
         try:
-            todo["date_created"] = todo["date_created"].isoformat()
+            todo["date_created"] = todo["date_created"]
             validate(instance=todo, schema=TodoModel.SCHEMA)
             return True
         except ValidationError as e:
