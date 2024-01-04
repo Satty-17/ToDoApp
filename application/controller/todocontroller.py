@@ -2,7 +2,6 @@ from flask import abort, redirect, render_template, flash, request
 from application import app
 from application.forms import TodoForm
 from application.service.todoservice import TodoService
-from application import schemas
 
 @app.route("/")
 def get_todos():
