@@ -98,3 +98,4 @@ class TodoModel:
         except Exception as e:
             print(f"Error deleting todo: {e}")
             return False
+        

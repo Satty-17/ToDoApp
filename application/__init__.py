@@ -39,9 +39,9 @@ app.config["SECRET_KEY"] = secret_key
 
 from .controller import todocontroller
 
-# complete_task= db.todo_flask.find({ "completed": "True" })
-# for task in complete_task:
-#     print(task["name"])
+complete_task= list(db.todo_flask.find({ "completed": "True" }))
+for task in complete_task:
+    print(task["name"])
 
 # most_recent_tasks = db.todo_flask.find().sort("date_created").limit(5)
 # for task in most_recent_tasks:
